@@ -63,6 +63,14 @@ class DuCollection implements \Countable
     {
         $method = $this->getReflectionMethod($name);
         
+        if (!$method->isPublic()) {
+            throw new \BadMethodCallException(sprintf(
+                '%s cannot invoke non-public method %s',
+                $this->getDescription(),
+                $name
+            ));
+        }
+        
         $values = [];
         
         foreach ($this->items as $item) {
@@ -86,14 +94,19 @@ class DuCollection implements \Countable
     {
         if (!method_exists($this->class, $name)) {
             throw new \BadMethodCallException(sprintf(
-                '%s (class: %s) cannot invoke unknown method %s',
-                static::class,
-                $this->class,
+                '%s cannot invoke unknown method %s',
+                $this->getDescription(),
                 $name
             ));
         }
         
         return new \ReflectionMethod($this->class, $name);
+    }
+    
+    
+    private function getDescription()
+    {
+        return sprintf('%s (class: %s)', static::class, $this->class);
     }
     
 }

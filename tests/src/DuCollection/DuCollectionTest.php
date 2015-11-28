@@ -114,15 +114,25 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         }
     }
     
+    public function testThrowsWhenCallingNonExistentMethodOnContainedClass()
+    {
+        $collection = $this->getTestDuCollection(User::class);
+        $this->setExpectedException(\BadMethodCallException::class);
+        $collection->notExists();
+    }
+    
     public function testCallsNonReturningMethodOnContainedObjectsReturnNull()
     {
         $collection = $this->getTestDuCollection(User::class);
+        $this->setExpectedException(\BadMethodCallException::class);
+        $collection->protectedMethod();
+    }
     
-        $collection->add(new User());
-        $collection->add(new User());
-        $collection->add(new User());
-    
-        $this->assertNull($collection->setUsername('foo'));
+    public function testThrowsWhenCallingProtectedMethod()
+    {
+        $collection = $this->getTestDuCollection(User::class);
+        $this->setExpectedException(\BadMethodCallException::class);
+        $collection->privateMethod();
     }
     
     public function providePrimitives() : array

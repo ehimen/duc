@@ -20,4 +20,14 @@ class User
         return sprintf('Performed action %s on %s', $action, $date->format('c'));
     }
     
+    protected function protectedMethod()
+    {
+        
+    }
+    
+    protected function privateMethod()
+    {
+        
+    }
+    
 }
