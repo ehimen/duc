@@ -69,10 +69,13 @@ class DuCollection implements \Countable
                 $name
             ));
         }
-    
-        foreach ($this->items as $item) {
-            $item->$name(...$arguments);
-        }
+        
+        return array_map(
+            function($item) use ($name, $arguments) {
+                return $item->$name(...$arguments);
+            },
+            iterator_to_array($this->items)
+        );
     }
     
     

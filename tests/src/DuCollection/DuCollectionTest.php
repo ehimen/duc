@@ -3,11 +3,7 @@
 namespace Ehimen\Tests\DuCollection;
 
 use Ehimen\DuCollection\DuCollection;
-use Ehimen\Tests\DuCollection\Fixtures\Blog;
-use Ehimen\Tests\DuCollection\Fixtures\Incrementer;
-use Ehimen\Tests\DuCollection\Fixtures\MutableCounter;
 use Ehimen\Tests\DuCollection\Fixtures\User;
-use phpDocumentor\Reflection\DocBlock\Type\Collection;
 
 
 class DuCollectionTest extends \PHPUnit_Framework_TestCase
@@ -41,7 +37,7 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $collection = $this->getTestDuCollection();
         $this->setExpectedException(\InvalidArgumentException::class);
-        $collection->add(new Blog());
+        $collection->add(new class() {});
     }
     
     /**
@@ -88,6 +84,34 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         $collection->add($this->getMockUserExpectingActionPerformed($date, $action));
         
         $collection->performAction($date, $action);
+    }
+    
+    public function testCallsMethodOnContainedObjectsWithMultipleArgumentsReturnsArray()
+    {
+        $collection = $this->getTestDuCollection(User::class);
+        
+        $date   = new \DateTimeImmutable();
+        $action = 'login';
+        
+        $expectedString = sprintf('Performed action %s on %s', $action, $date->format('c'));
+        
+        $collection->add(new User());
+        $collection->add(new User());
+        $collection->add(new User());
+        
+        $values = $collection->performAction($date, $action);
+        
+        if (!is_array($values) || count($values) !== 3) {
+            $this->fail(sprintf(
+                '%s expected returned values to be array of size 3, but got %s',
+                __METHOD__,
+                gettype($values)
+            ));
+        }
+        
+        foreach ($values as $value) {
+            $this->assertSame($expectedString, $value);
+        }
     }
     
     public function providePrimitives() : array

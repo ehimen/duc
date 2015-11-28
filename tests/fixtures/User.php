@@ -15,9 +15,9 @@ class User
         return 'user';
     }
     
-    public function performAction(\DateTimeImmutable $date, string $action)
+    public function performAction(\DateTimeImmutable $date, string $action) : string
     {
-        
+        return sprintf('Performed action %s on %s', $action, $date->format('c'));
     }
     
 }
