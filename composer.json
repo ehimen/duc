@@ -1,9 +1,6 @@
 {
     "name": "ehimen/ducollection",
-    "description": "Duck-typed PHP collection",
-    "require-dev": {
-        "phpunit/phpunit": "^5.0"
-    },
+    "description": "Duck-typed PHP7 collection",
     "license": "MIT",
     "authors": [
         {
@@ -11,7 +8,12 @@
             "email": "andrewcook1990@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "php": ">=7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.0"
+    },
     "autoload": {
         "psr-4": {
             "Ehimen\\DuCollection\\": "src/DuCollection",
