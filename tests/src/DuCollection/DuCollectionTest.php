@@ -2,7 +2,7 @@
 
 namespace Ehimen\Tests\DuCollection;
 
-use Ehimen\Ducollection\DuCollection;
+use Ehimen\DuCollection\DuCollection;
 use Ehimen\Tests\DuCollection\Fixtures\Blog;
 use Ehimen\Tests\DuCollection\Fixtures\User;
 
@@ -28,11 +28,32 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $collection);
     }
     
-    public function testAddThrowsIfNotOfType()
+    public function testAddThrowsIfNotOfClass()
     {
         $collection = $this->getTestDuCollection();
         $this->setExpectedException(\InvalidArgumentException::class);
         $collection->add(new Blog());
+    }
+    
+    /**
+     * @dataProvider providePrimitives
+     */
+    public function testAddThrowsIfNotObject($primitive)
+    {
+        $collection = $this->getTestDuCollection();
+        $this->setExpectedException(\InvalidArgumentException::class);
+        $collection->add($primitive);
+    }
+    
+    public function providePrimitives() : array
+    {
+        return [
+            [null],
+            [false],
+            [0],
+            [''],
+            [[]],
+        ];
     }
     
     

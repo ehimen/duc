@@ -35,10 +35,18 @@ class DuCollection implements \Countable
     
     public function add($object)
     {
+        if (!is_object($object)) {
+            throw new \InvalidArgumentException(sprintf(
+                '%s requires an object. Got: %s',
+                __METHOD__,
+                gettype($object)
+            ));
+        }
+        
         if (!is_a($object, $this->class)) {
             throw new \InvalidArgumentException(sprintf(
                 '%s requires instance of %s. Got: %s',
-                static::class,
+                __METHOD__,
                 $this->class,
                 get_class($object)
             ));

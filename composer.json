@@ -14,8 +14,8 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Ehimen\\Ducollection\\": "src/Ducollection",
-            "Ehimen\\Tests\\Ducollection\\Fixtures\\": "tests/fixtures"
+            "Ehimen\\DuCollection\\": "src/DuCollection",
+            "Ehimen\\Tests\\DuCollection\\Fixtures\\": "tests/fixtures"
         }
     }
 }
