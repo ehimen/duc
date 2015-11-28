@@ -1,45 +1,44 @@
 <?php
 
-namespace Ehimen\Tests\Ducollection;
+namespace Ehimen\Tests\DuCollection;
 
-use Doctrine\Instantiator\Exception\InvalidArgumentException;
-use Ehimen\Ducollection\Ducollection;
-use Ehimen\Tests\Ducollection\Fixtures\Blog;
-use Ehimen\Tests\Ducollection\Fixtures\User;
+use Ehimen\Ducollection\DuCollection;
+use Ehimen\Tests\DuCollection\Fixtures\Blog;
+use Ehimen\Tests\DuCollection\Fixtures\User;
 
 
-class DucollectionTest extends \PHPUnit_Framework_TestCase
+class DuCollectionTest extends \PHPUnit_Framework_TestCase
 {
     
     public function testInitialisable()
     {
-        $this->assertInstanceOf(Ducollection::class, $this->getTestDucollection());
+        $this->assertInstanceOf(DuCollection::class, $this->getTestDuCollection());
     }
     
     public function testThrowsIfClassNotExists()
     {
         $this->setExpectedException(\InvalidArgumentException::class);
-        $this->getTestDucollection('foobar');
+        $this->getTestDuCollection('foobar');
     }
     
     public function testAdd()
     {
-        $collection = $this->getTestDucollection();
+        $collection = $this->getTestDuCollection();
         $collection->add(new User());
         $this->assertCount(1, $collection);
     }
     
     public function testAddThrowsIfNotOfType()
     {
-        $collection = $this->getTestDucollection();
+        $collection = $this->getTestDuCollection();
         $this->setExpectedException(\InvalidArgumentException::class);
         $collection->add(new Blog());
     }
     
     
-    private function getTestDucollection($className = User::class)
+    private function getTestDuCollection($className = User::class)
     {
-        return new Ducollection($className);
+        return new DuCollection($className);
     }
     
 }

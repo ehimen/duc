@@ -1,6 +1,6 @@
 <?php
 
-namespace Ehimen\Tests\Ducollection\Fixtures;
+namespace Ehimen\Tests\DuCollection\Fixtures;
 
 class Blog
 {

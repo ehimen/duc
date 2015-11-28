@@ -1,8 +1,8 @@
 <?php
 
-namespace Ehimen\Ducollection;
+namespace Ehimen\DuCollection;
 
-class Ducollection implements \Countable
+class DuCollection implements \Countable
 {
     
     /**
@@ -24,7 +24,7 @@ class Ducollection implements \Countable
         if (!class_exists($class)) {
             throw new \InvalidArgumentException(sprintf(
                 '%s must be constructed with the name of an existing class. Got: %s',
-                get_class($this),
+                static::class,
                 $class
             ));
         }
@@ -38,7 +38,7 @@ class Ducollection implements \Countable
         if (!is_a($object, $this->class)) {
             throw new \InvalidArgumentException(sprintf(
                 '%s requires instance of %s. Got: %s',
-                get_class($this),
+                static::class,
                 $this->class,
                 get_class($object)
             ));
