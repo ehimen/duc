@@ -25,7 +25,7 @@ class User
         
     }
     
-    protected function privateMethod()
+    private function privateMethod()
     {
         
     }

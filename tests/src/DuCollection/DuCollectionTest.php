@@ -14,17 +14,20 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(DuCollection::class, $this->getTestDuCollection());
     }
     
+    
     public function testThrowsIfClassNotExists()
     {
         $this->setExpectedException(\InvalidArgumentException::class);
         $this->getTestDuCollection('foobar');
     }
     
+    
     public function testInitialisableFromInstance()
     {
         $this->getTestDuCollection(new User());
         $this->assertInstanceOf(DuCollection::class, $this->getTestDuCollection(new User()));
     }
+    
     
     public function testAdd()
     {
@@ -33,12 +36,14 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $collection);
     }
     
+    
     public function testAddThrowsIfNotOfClass()
     {
         $collection = $this->getTestDuCollection();
         $this->setExpectedException(\InvalidArgumentException::class);
         $collection->add(new class() {});
     }
+    
     
     /**
      * @dataProvider providePrimitives
@@ -49,6 +54,7 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException(\InvalidArgumentException::class);
         $collection->add($primitive);
     }
+    
     
     public function testCallsMethodOnContainedObjects()
     {
@@ -61,6 +67,7 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         $collection->getUsername();
     }
     
+    
     public function testCallsMethodOnContainedObjectsWithArgument()
     {
         $collection = $this->getTestDuCollection(User::class);
@@ -71,6 +78,7 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         
         $collection->setUsername('foo');
     }
+    
     
     public function testCallsMethodOnContainedObjectsWithMultipleArguments()
     {
@@ -85,6 +93,7 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         
         $collection->performAction($date, $action);
     }
+    
     
     public function testCallsMethodOnContainedObjectsWithMultipleArgumentsReturnsArray()
     {
@@ -114,12 +123,14 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         }
     }
     
+    
     public function testThrowsWhenCallingNonExistentMethodOnContainedClass()
     {
         $collection = $this->getTestDuCollection(User::class);
         $this->setExpectedException(\BadMethodCallException::class);
         $collection->notExists();
     }
+    
     
     public function testCallsNonReturningMethodOnContainedObjectsReturnNull()
     {
@@ -128,12 +139,14 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         $collection->protectedMethod();
     }
     
+    
     public function testThrowsWhenCallingProtectedMethod()
     {
         $collection = $this->getTestDuCollection(User::class);
         $this->setExpectedException(\BadMethodCallException::class);
         $collection->privateMethod();
     }
+    
     
     public function providePrimitives() : array
     {
@@ -152,6 +165,7 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         return new DuCollection($class);
     }
     
+    
     private function getMockUserExpectingGetUsernameCall() : User
     {
         $user = $this->getMockBuilder(User::class)
@@ -162,6 +176,7 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         
         return $user;
     }
+    
     
     private function getMockUserExpectingUsernameSetTo($username) : User
     {
@@ -174,6 +189,7 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         
         return $user;
     }
+    
     
     private function getMockUserExpectingActionPerformed(\DateTimeImmutable $date, string $action) : User
     {

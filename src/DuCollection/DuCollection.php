@@ -2,23 +2,35 @@
 
 namespace Ehimen\DuCollection;
 
-class DuCollection implements \Countable
+/**
+ * Duck-typed collection.
+ *
+ * All contained items are instances of a single class.
+ * Calls on the collection will be proxied to the contained items.
+ */
+final class DuCollection implements \Countable
 {
     
     /**
      * @var string
-     * 
+     *
      * The name of the class the collection holds.
      */
     private $class;
     
     /**
      * @var \SplObjectStorage
-     * 
+     *
      * Internal collection of objects.
      */
     private $items;
     
+    
+    /**
+     * DuCollection constructor.
+     *
+     * @param object|string $class An instance of, or the name of the class, that this collection will contain.
+     */
     public function __construct($class)
     {
         if (is_object($class)) {
@@ -37,6 +49,14 @@ class DuCollection implements \Countable
         $this->items = new \SplObjectStorage();
     }
     
+    
+    /**
+     * Adds an object to the collection.
+     *
+     * $object must be an instance of the class of this collection.
+     *
+     * @param object $object The object to add.
+     */
     public function add($object)
     {
         if (!is_object($object)) {
@@ -58,8 +78,19 @@ class DuCollection implements \Countable
         
         $this->items->attach($object);
     }
-
-    public function __call($name, $arguments)
+    
+    
+    /**
+     * Magic method to proxy calls to each of the contained elements.
+     *
+     * @param string $name The method name.
+     * @param array  $arguments
+     *
+     * @throws \BadMethodCallException  When the method cannot be found for this collection's class, or is non-public.
+     *
+     * @return array|null
+     */
+    public function __call(string $name, array $arguments)
     {
         $method = $this->getReflectionMethod($name);
         
@@ -85,12 +116,23 @@ class DuCollection implements \Countable
     }
     
     
+    /**
+     * @inheritdoc
+     */
     public function count()
     {
         return $this->items->count();
     }
     
-    private function getReflectionMethod($name) : \ReflectionMethod
+    
+    /**
+     * Gets a reflection method by $name for the class that this collection contains.
+     *
+     * @param string $name
+     *
+     * @return \ReflectionMethod
+     */
+    private function getReflectionMethod(string $name) : \ReflectionMethod
     {
         if (!method_exists($this->class, $name)) {
             throw new \BadMethodCallException(sprintf(
@@ -104,6 +146,13 @@ class DuCollection implements \Countable
     }
     
     
+    /**
+     * Gets a description of this class.
+     *
+     * Useful for exception messages.
+     *
+     * @return string
+     */
     private function getDescription()
     {
         return sprintf('%s (class: %s)', static::class, $this->class);
