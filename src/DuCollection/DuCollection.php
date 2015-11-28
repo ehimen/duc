@@ -61,6 +61,29 @@ class DuCollection implements \Countable
 
     public function __call($name, $arguments)
     {
+        $method = $this->getReflectionMethod($name);
+        
+        $values = [];
+        
+        foreach ($this->items as $item) {
+            $values[] = $item->$name(...$arguments);
+        }
+        
+        if (!$method->getReturnType()) {
+            return null;
+        }
+        
+        return $values;
+    }
+    
+    
+    public function count()
+    {
+        return $this->items->count();
+    }
+    
+    private function getReflectionMethod($name) : \ReflectionMethod
+    {
         if (!method_exists($this->class, $name)) {
             throw new \BadMethodCallException(sprintf(
                 '%s (class: %s) cannot invoke unknown method %s',
@@ -70,18 +93,7 @@ class DuCollection implements \Countable
             ));
         }
         
-        return array_map(
-            function($item) use ($name, $arguments) {
-                return $item->$name(...$arguments);
-            },
-            iterator_to_array($this->items)
-        );
-    }
-    
-    
-    public function count()
-    {
-        return $this->items->count();
+        return new \ReflectionMethod($this->class, $name);
     }
     
 }

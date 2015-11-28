@@ -114,6 +114,17 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         }
     }
     
+    public function testCallsNonReturningMethodOnContainedObjectsReturnNull()
+    {
+        $collection = $this->getTestDuCollection(User::class);
+    
+        $collection->add(new User());
+        $collection->add(new User());
+        $collection->add(new User());
+    
+        $this->assertNull($collection->setUsername('foo'));
+    }
+    
     public function providePrimitives() : array
     {
         return [
