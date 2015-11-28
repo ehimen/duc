@@ -1,0 +1,21 @@
+{
+    "name": "ehimen/ducollection",
+    "description": "Duck-typed PHP collection",
+    "require-dev": {
+        "phpunit/phpunit": "^5.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andy Cook",
+            "email": "andrewcook1990@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Ehimen\\Ducollection\\": "src/Ducollection",
+            "Ehimen\\Tests\\Ducollection\\Fixtures\\": "tests/fixtures"
+        }
+    }
+}
