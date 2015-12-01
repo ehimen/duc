@@ -1,6 +1,6 @@
 <?php
 
-namespace Ehimen\Tests\DuCollection\Fixtures;
+namespace Ehimen\DucTests\Fixtures;
 
 class User
 {

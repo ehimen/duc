@@ -1,6 +1,6 @@
 {
-    "name": "ehimen/ducollection",
-    "description": "Duck-typed PHP7 collection",
+    "name": "ehimen/duc",
+    "description": "Duck type-inspired PHP7 experimentation",
     "license": "MIT",
     "authors": [
         {
@@ -16,8 +16,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Ehimen\\DuCollection\\": "src/DuCollection",
-            "Ehimen\\Tests\\DuCollection\\Fixtures\\": "tests/fixtures"
+            "Ehimen\\Duc\\": "src/Duc/",
+            "Ehimen\\DucTests\\Fixtures\\": "tests/fixtures",
+            "Ehimen\\DucTests\\": "tests/src"
         }
     }
 }

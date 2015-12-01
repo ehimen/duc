@@ -1,6 +1,6 @@
 <?php
 
-namespace Ehimen\DuCollection;
+namespace Ehimen\Duc\DuCollection;
 
 /**
  * Duck-typed collection.

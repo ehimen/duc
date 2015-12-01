@@ -1,12 +1,13 @@
 <?php
 
-namespace Ehimen\Tests\DuCollection;
+namespace Ehimen\DucTests\DuCollection;
 
-use Ehimen\DuCollection\DuCollection;
-use Ehimen\Tests\DuCollection\Fixtures\User;
+use Ehimen\Duc\DuCollection\DuCollection;
+use Ehimen\DucTests\Fixtures\User;
+use Ehimen\DucTests\TestCase;
 
 
-class DuCollectionTest extends \PHPUnit_Framework_TestCase
+class DuCollectionTest extends TestCase
 {
     
     public function testInitialisable()
@@ -145,18 +146,6 @@ class DuCollectionTest extends \PHPUnit_Framework_TestCase
         $collection = $this->getTestDuCollection(User::class);
         $this->setExpectedException(\BadMethodCallException::class);
         $collection->privateMethod();
-    }
-    
-    
-    public function providePrimitives() : array
-    {
-        return [
-            [null],
-            [false],
-            [0],
-            [''],
-            [[]],
-        ];
     }
     
     
